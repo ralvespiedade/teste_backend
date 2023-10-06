@@ -47,9 +47,21 @@ async function put(req, res) {
 
 }
 
+async function del(req, res) {
+  const { id } = req.params
+  const product = await productsModel.findOneAndDelete({ _id: id })
+
+  if (!product) {
+    res.send('fail')
+  } else {
+    res.send('success')
+  }
+    
+}
 
 module.exports = {
   get,
   post,
-  put
+  put,
+  del
 }
