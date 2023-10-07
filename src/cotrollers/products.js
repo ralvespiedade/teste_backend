@@ -44,8 +44,8 @@ async function put(req, res) {
     message: "success"
   })
 
-
 }
+
 
 async function del(req, res) {
   const { id } = req.params
