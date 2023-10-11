@@ -42,8 +42,24 @@ async function post(req, res) {
     client
   })
 }
+
+async function put(req, res) {
+  const { id } = req.params
+  
+  const client = await ClientsModel.findOneAndUpdate({ _id: id }, req.body, { new: true })
+  
+  const message = client ? "success" : "error"
+
+
+  res.send ({
+    message,
+    client
+  })
+}
+
   
 module.exports = {
   get,
-  post
+  post,
+  put
 }
