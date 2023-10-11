@@ -58,8 +58,11 @@ async function put(req, res) {
   
   const product = await productsModel.findOneAndUpdate({ _id: id }, req.body, { new: true })
 
+  const message = product ? "success" : "error"
+
   res.send({
-    message: "success"
+    message,
+    product
   })
 
 }
