@@ -3,9 +3,9 @@ const ClientsModel = require('../models/clients')
 //List of clients (GET)
 
 async function get(req, res) {
-  const id = req.params
+  const { id } = req.params
 
-  var obj = id ? _id = id : null  
+  var obj = id ? { _id: id } : null  
 
   const clients = await ClientsModel.find(obj)
 
@@ -57,9 +57,25 @@ async function put(req, res) {
   })
 }
 
+async function del (req, res) {
+  const { id } = req.params
+
+  const client = await ClientsModel.findOneAndDelete({ _id: id })
+  
+  const message = client ? 'success' : 'error'
+
+  res.send({
+    message,
+    client
+  })
+  
+  get()
+}
+
   
 module.exports = {
   get,
   post,
-  put
+  put,
+  del
 }
