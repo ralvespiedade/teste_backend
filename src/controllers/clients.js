@@ -12,6 +12,38 @@ async function get(req, res) {
   res.send(clients)
 }
 
+async function post(req, res) {
+  const { 
+    name,
+    email,
+    fone,
+    address
+  } = req.body
+  
+  
+  
+  //creating new client
+  const client = new ClientsModel({
+    name,
+    email,
+    fone,
+    address
+  })
+  
+  //Saving new client
+  client.save()
+  
+  //Response
+  
+  const message = client ? 'success' : 'error'
+  
+  res.send({
+    message,
+    client
+  })
+}
+  
 module.exports = {
-  get
+  get,
+  post
 }
