@@ -10,6 +10,8 @@ async function get(req, res) {
   const clients = await ClientsModel.find(obj)
 
   res.send(clients)
+  
+  
 }
 
 async function post(req, res) {
@@ -20,29 +22,78 @@ async function post(req, res) {
     address
   } = req.body
   
+  // Is this client is already registered?
+  
+  var teste = await uniqueClientCheck(fone, email)
+ 
+ 
   
   
-  //creating new client
-  const client = new ClientsModel({
-    name,
-    email,
-    fone,
-    address
-  })
+
   
-  //Saving new client
-  client.save()
+  if (teste != "") {
+    res.send(teste)
+  } else {
+
+    //creating new client
+    const client = new ClientsModel({
+      name,
+      email,
+      fone,
+      address
+    })
+    
+    //Saving new client
+    //client.save()
+    
+    //Response
+    
+    const message = client ? 'success' : 'error'
+    
+    res.send({
+      message,
+      client
+    })
+  }
   
-  //Response
-  
-  const message = client ? 'success' : 'error'
-  
-  res.send({
-    message,
-    client
-  })
 }
 
+//--Grants clients don't have same fone nor email
+async function uniqueClientCheck(fone, email) {
+  
+  
+  const clients = await ClientsModel.find()
+  var fone_validation = true
+  var email_validation = true
+  var message = ""
+  
+  clients.forEach(client => {
+   
+    if(client.fone == fone) {
+      fone_validation = false
+      
+    }
+      
+    if(client.email == email) {
+      email_validation = false
+    }
+      
+  })
+
+  if (!fone_validation && !email_validation) {
+    message = "[Erro] Fone e E-mail já cadastrados!"
+  } else if (!fone_validation && email_validation) {
+    message = `[Erro] fone já cadastrado!`
+  } else if (fone_validation && !email_validation){
+    message = `[Erro] e-mail já cadastrado!`
+  }
+
+  
+  return message
+
+}
+
+  
 async function put(req, res) {
   const { id } = req.params
   
