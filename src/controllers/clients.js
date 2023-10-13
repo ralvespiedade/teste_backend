@@ -19,16 +19,13 @@ async function post(req, res) {
     name,
     email,
     fone,
-    address
+    address,
+    password
   } = req.body
-  
+  console.log(req.body)
   // Is this client is already registered?
   
   var teste = await uniqueClientCheck(fone, email)
- 
- 
-  
-  
 
   
   if (teste != "") {
@@ -40,11 +37,12 @@ async function post(req, res) {
       name,
       email,
       fone,
-      address
+      address,
+      password
     })
     
     //Saving new client
-    //client.save()
+    client.save()
     
     //Response
     
@@ -88,10 +86,10 @@ async function uniqueClientCheck(fone, email) {
     message = `[Erro] e-mail já cadastrado!`
   }
 
-  
   return message
-
+  
 }
+
 
   
 async function put(req, res) {
