@@ -1,4 +1,4 @@
-const ClientsModel = require('../models/clients')
+const Model = require('../models/clients')
 
 //List of clients (GET)
 
@@ -7,7 +7,7 @@ async function get(req, res) {
 
   var obj = id ? { _id: id } : null  
 
-  const clients = await ClientsModel.find(obj)
+  const clients = await Model.find(obj)
 
   res.send(clients)
   
@@ -33,7 +33,7 @@ async function post(req, res) {
   } else {
 
     //creating new client
-    const client = new ClientsModel({
+    const client = new Model({
       name,
       email,
       fone,
@@ -60,7 +60,7 @@ async function post(req, res) {
 async function uniqueClientCheck(fone, email) {
   
   
-  const clients = await ClientsModel.find()
+  const clients = await Model.find()
   var fone_validation = true
   var email_validation = true
   var message = ""
@@ -95,7 +95,7 @@ async function uniqueClientCheck(fone, email) {
 async function put(req, res) {
   const { id } = req.params
   
-  const client = await ClientsModel.findOneAndUpdate({ _id: id }, req.body, { new: true })
+  const client = await Model.findOneAndUpdate({ _id: id }, req.body, { new: true })
   
   const message = client ? "success" : "error"
 
@@ -109,7 +109,7 @@ async function put(req, res) {
 async function del (req, res) {
   const { id } = req.params
 
-  const client = await ClientsModel.findOneAndDelete({ _id: id })
+  const client = await Model.findOneAndDelete({ _id: id })
   
   const message = client ? 'success' : 'error'
 

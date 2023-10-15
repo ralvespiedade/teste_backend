@@ -9,6 +9,6 @@ const schemaClients = new mongoose.Schema({
   password: String
 })
 
-const ModelClient = mongoose.model('clients', schemaClients)
+const Model = mongoose.model('clients', schemaClients)
 
-module.exports = ModelClient
+module.exports = Model
