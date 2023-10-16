@@ -1,11 +1,12 @@
 const Model = require('../models/orders')
 
 async function get(req, res) {
-  const id = req.parms
-
+  
+  const { id } = req.params
+  
   const obj = id ? { _id: id } : null
 
-  const orders = Model.find(obj)
+  const orders = await Model.find(obj)
 
   orders ? message = "sucess" : message = 'error' 
 
